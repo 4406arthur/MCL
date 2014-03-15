@@ -1,7 +1,7 @@
 module ball(clk, direction, halt, rst, owner, position,outside,win);
 
 input clk;
-input dirction;
+input direction;
 input halt;
 input rst;
 input owner;
@@ -16,7 +16,7 @@ integer i;
 initial begin
 for (i = 9; i > 0; i=i-1)
 	position[i] = 0;
-posotion[0]=1;
+position[0]=1;
 
 out=0;
 outside=0;

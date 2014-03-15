@@ -51,8 +51,8 @@ reg trigger;
 always@(posedge clk) begin
 	if(outside) begin
 		halt=1;
-		resball=1;
-		if(winner==1)brgin
+		rstball=1;
+		if(winner==1)begin
 			ball=1;
 			direction=0;
 			case(p1_score)
@@ -73,52 +73,73 @@ always@(posedge clk) begin
 				end
 			endcase
 		end else if(winner==0)begin
-				ball=0;
+			ball=0;
 			direction=1;
-		case(p2_score)
-			0: p2_score=15;
-			15: p2_score=30;
-			30: p2_score=40;
-			40: begin
-				if(p1_score==40)begin
-					if(p1_deuce)
-						p1_deuce=0;
-					else if(p2_deuce)
+			case(p2_score)
+				0: p2_score=15;
+				15: p2_score=30;
+				30: p2_score=40;
+				40: begin
+					if(p1_score==40)begin
+						if(p1_deuce)
+							p1_deuce=0;
+						else if(p2_deuce)
+							p2_score=45;
+						else
+							p2_deuce=1;
+					end else begin
 						p2_score=45;
-					else
-						p2_deuce=1;
-				end else begin
-					p2_score=45;
+					end
 				end
+			endcase
+		end	
+	end else begin
+		rstball=0;
+		if(p1_score == 45 || p2_score==45)begin
+			if(ctrl)begin
+				p1_score=0;
+				p2_score=0;
+				direction=0;
+				ball=1;
+				rstball=1;
+				p1_deuce=0;
+				p2_deuce=0;
 			end
-		endcase
-	end
-end else begin
-	rstball=0;
-	if(p1_score == 45 || p2_score==45)begin
-		if(ctrl)begin
-			p1_score=0;
-			p2_score=0;
-			direction=0;
-			ball=1;
-			rstball=1;
-			p1_deuce=0;
-			p2_deuce=0;
 		end
 	end
-end
+	
+	if(p1_rdy) begin
+		if(p1_btn) begin
+			p1_rdy=0;
+			p1_idle=counter_max;
+			p1_power=0;
+			for(p1_idx=4;p1_idx>=0;p1_idx=p1_idx-1)begin
+				p1_zone[p1_idx]=0;
+				if(p1_power<3)begin
+					if(sw[p1_idx])begin
+						p1_zone[p1_idx]=1;
+						p1_power=p1_power+1;
+					end
+				end
+			end
 			
-endmodule
-
-
-
-//////////////////////
-/*
-lost 4
-*/
-////////////////////////
-
-
+			for(p1_idx=4;p1_idx>=0;p1_idx=p1_idx-1)begin
+				if(position[p1_idx]==1 && p1_zone[p1_idx]==1)begin
+					direction=0;
+					sel=1;
+					halt=0;
+				end
+			end
+		end
+	end else begin
+		if(p1_idle==0)begin
+			p1_rdy=1;
+		end else begin
+			p1_idle=p1_idle-1;
+		end
+	end
+			
+					
 	if(p2_rdy) begin
 		if(p2_btn) begin
 			p2_rdy=0;

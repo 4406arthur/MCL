@@ -17,7 +17,7 @@ always@(sel) begin
 		1: counter_max=5000000;
 		2: counter_max=12500000;
 		3: counter_max=25000000;
-		default
+		default: counter_max=25000000;
 	endcase
 end
 
