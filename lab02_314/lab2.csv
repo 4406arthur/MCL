@@ -14,13 +14,13 @@
 
 # Quartus II 64-Bit Version 10.1 Build 153 11/29/2010 SJ Web Edition
 # File: C:/Users/ArthurMa/Documents/MCL/lab02_314/lab2.csv
-# Generated on: Sat Mar 15 20:59:39 2014
+# Generated on: Sat Mar 15 21:30:08 2014
 
 # Note: The column header names should not be changed if you wish to import this .csv file into the Quartus II software.
 
 To,Direction,Location,I/O Bank,VREF Group,I/O Standard,Reserved
 clk,Input,PIN_G21,6,B6_N1,,
-ctr1,Input,PIN_G3,1,B1_N0,,
+ctrl,Input,PIN_G3,1,B1_N0,,
 led[9],Output,PIN_B1,1,B1_N0,,
 led[8],Output,PIN_B2,1,B1_N0,,
 led[7],Output,PIN_C2,1,B1_N0,,

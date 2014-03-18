@@ -29,6 +29,10 @@ always@(posedge clk or posedge rst)begin
 		if(owner)begin
 			for(i=9;i>0;i=i-1)
 				position[i] = 0;
+			position[0]=1;
+		end else if (owner==0) begin
+			for(i=9;i>0;i=i-1)
+				position[i]=0;
 			position[9]=1;
 		end
 	end else begin
